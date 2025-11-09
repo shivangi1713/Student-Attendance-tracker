@@ -1,0 +1,1 @@
+import mongoose from 'mongoose';const T=new mongoose.Schema({userId:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},title:String,done:{type:Boolean,default:false}},{timestamps:true});export default mongoose.model('Task',T)

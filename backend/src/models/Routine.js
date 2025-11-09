@@ -1,0 +1,1 @@
+import mongoose from 'mongoose';const R=new mongoose.Schema({userId:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true},planner:{type:Map,of:[String],default:{}},notifyTimes:{type:Map,of:String,default:{}},manual:{type:Map,of:String,default:{}},picturePath:{type:String,default:''}},{timestamps:true});export default mongoose.model('Routine',R)

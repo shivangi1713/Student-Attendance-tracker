@@ -1,0 +1,1 @@
+import jwt from 'jsonwebtoken';export default function(req,res,next){const h=req.headers.authorization||'';const t=h.startsWith('Bearer ')?h.slice(7):null;if(!t)return res.status(401).json({error:'No token'});try{const d=jwt.verify(t,process.env.JWT_SECRET);req.user={id:d.id};next()}catch(e){return res.status(401).json({error:'Invalid token'})}}

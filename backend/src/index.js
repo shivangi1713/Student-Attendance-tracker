@@ -1,0 +1,18 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import mongoose from 'mongoose';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import authRoutes from './routes/auth.js';
+import subjectRoutes from './routes/subjects.js';
+import taskRoutes from './routes/tasks.js';
+import routineRoutes from './routes/routines.js';
+const app = express();app.use(express.json());app.use(cors({ origin:['http://localhost:5173'], credentials:true }));
+const __filename=fileURLToPath(import.meta.url);const __dirname=path.dirname(__filename);
+app.use('/uploads', express.static(path.join(__dirname,'uploads')));
+const MONGO_URI=process.env.MONGO_URI||'mongodb://127.0.0.1:27017/attendance_tracker';const PORT=process.env.PORT||5050;
+mongoose.connect(MONGO_URI).then(()=>console.log('Mongo connected')).catch(e=>{console.error('Mongo error',e.message);process.exit(1)});
+app.get('/api/health',(req,res)=>res.json({ok:true}));
+app.use('/api/auth',authRoutes);app.use('/api/subjects',subjectRoutes);app.use('/api/tasks',taskRoutes);app.use('/api/routines',routineRoutes);
+app.listen(PORT,()=>console.log('API on',PORT));
